@@ -4,7 +4,7 @@ public class City {
 
     private int id;
     private String name;
-    private Coordinate coordinate;
+    private Coordinates coordinate;
 
 
 }
