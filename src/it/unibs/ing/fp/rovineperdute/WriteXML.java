@@ -25,7 +25,7 @@ public class WriteXML {
      * @author Rossi Mirko
      */
 
-    //TODO finire
+    //TODO finish
 
     public void writeXML(){
 
@@ -52,11 +52,14 @@ public class WriteXML {
         try {
             xmlw.writeStartElement("routes");
 
+            /*
+
+            TAG XML
+
+             */
+
             //tag "routes" close
             xmlw.writeEndElement();
-
-
-
 
             //closing document
             xmlw.writeEndDocument();
@@ -67,9 +70,9 @@ public class WriteXML {
             //closing document and resources used
             xmlw.close();
 
-            //Crea lo stesso file ma indentato.
+            //Creation of a clone-file but indented
             try {
-                indentaFile();
+                indentFile();
             }catch (Exception e){
                 System.err.println(e);
             }
@@ -81,8 +84,7 @@ public class WriteXML {
         }
     }
 
-    //TODO mettere in english
-    public void indentaFile(){
+    public void indentFile(){
         try {
 
             DocumentBuilderFactory dbFactory;
@@ -93,7 +95,7 @@ public class WriteXML {
                 dbFactory = DocumentBuilderFactory.newInstance();
                 dBuilder = dbFactory.newDocumentBuilder();
 
-                //leggo il file originale
+                //reading the original file
                 original = dBuilder.parse(new InputSource(new InputStreamReader(new FileInputStream(FILE_NAME))));
             } catch (SAXException | IOException | ParserConfigurationException e) {
                 e.printStackTrace();
@@ -103,19 +105,19 @@ public class WriteXML {
             StreamResult xmlOutput = new StreamResult(stringWriter);
             TransformerFactory tf = TransformerFactory.newInstance();
 
-            //Transformer per indentazione
+            //Transformer for indentation
             Transformer transformer = tf.newTransformer();
             transformer.setOutputProperty(OutputKeys.METHOD, "xml");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
-            //Gli passo cio' che ho letto dal file originale
+            //passing what is read from the original file
             transformer.transform(new DOMSource(original), xmlOutput);
 
-            //Dopo formattazione scrivo su file
+            //After the formatting process, instructions for file writing
             FileWriter writer;
-            writer=new FileWriter("RoutesFormattato.xml");
+            writer=new FileWriter("RoutesFormatted.xml");
 
             BufferedWriter bufferedWriter;
             bufferedWriter=new BufferedWriter (writer);
