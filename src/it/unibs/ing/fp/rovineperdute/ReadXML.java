@@ -77,7 +77,7 @@ public class ReadXML {
                             ArrayList<Link> read_link =new ArrayList<>();
                             continueToStart(xmlr);
                             while(xmlr.getLocalName().equals("link")) {
-                                System.out.println(xmlr.getLocalName());
+                                //System.out.println(xmlr.getLocalName());
                                 read_link.add(new Link(Integer.parseInt(xmlr.getAttributeValue(0))));
                                 int check=continueToStart(xmlr);
                                 if(check==-1){

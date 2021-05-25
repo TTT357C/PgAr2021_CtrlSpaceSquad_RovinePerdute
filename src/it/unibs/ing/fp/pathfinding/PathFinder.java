@@ -71,10 +71,16 @@ public class PathFinder {
         ids.add(n.id);
         Collections.reverse(ids);
 
+        int cont=0;
         for(int id : ids){
-            System.out.print(id + " ");
+            if(cont!=0) {
+                System.out.print(" => ");
+
+            }
+            System.out.print(id);
+            cont++;
         }
-        System.out.println("");
+        System.out.println();
     }
 }
 

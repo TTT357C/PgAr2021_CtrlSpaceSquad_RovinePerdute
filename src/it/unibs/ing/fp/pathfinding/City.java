@@ -16,8 +16,9 @@ public class City implements Comparable<City> {
     public ArrayList<Link> neighbors;
 
     // Evaluation functions
-    public double f = Double.MAX_VALUE;
-    public double g = Double.MAX_VALUE;
+    public double f = 0;
+    public double g = 0;
+    //public double g = Double.MAX_VALUE;
     // Hardcoded heuristic
     public double h;
 
@@ -64,7 +65,7 @@ public class City implements Comparable<City> {
 
     public void calculateLink(){
         for (int i = 0; i < neighbors.size(); i++) {
-            neighbors.get(i).weight = Main.getCities().get(neighbors.get(i).city_id).getCoordinate().distanceMethod(this.coordinate);
+            neighbors.get(i).weight = Main.getCities().get(neighbors.get(i).city_id).getCoordinate().heightDifference(this.coordinate);
         }
 
     }
@@ -86,5 +87,9 @@ public class City implements Comparable<City> {
 
     public Coordinates getCoordinate() {
         return coordinate;
+    }
+
+    public ArrayList<Link> getNeighbors() {
+        return neighbors;
     }
 }
