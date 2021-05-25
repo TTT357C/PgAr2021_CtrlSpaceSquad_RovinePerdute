@@ -6,7 +6,7 @@ public class Vehicle {
     private int vehicle_type;
 
     /**
-     * Costructor of a vehicle
+     * Constructor method of a vehicle
      * @param team_name Vehicle team name
      * @param vehicle_type Integer which indicates the type of vehicle and how it consumes fuel
      */
