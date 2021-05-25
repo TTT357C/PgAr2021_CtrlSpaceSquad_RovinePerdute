@@ -22,9 +22,4 @@ public class City {
         links = new ArrayList<Link>();
     }
 
-    public City(int id, String name, Coordinates coordinate) {
-        this.id = id;
-        this.name = name;
-        this.coordinate = coordinate;
-    }
 }
