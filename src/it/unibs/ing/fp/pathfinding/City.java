@@ -2,6 +2,7 @@ package it.unibs.ing.fp.pathfinding;
 
 import it.unibs.ing.fp.rovineperdute.Coordinates;
 import it.unibs.ing.fp.rovineperdute.Main;
+import it.unibs.ing.fp.rovineperdute.Vehicle;
 
 import java.util.ArrayList;
 
@@ -63,9 +64,18 @@ public class City implements Comparable<City> {
         return this.h;
     }
 
-    public void calculateLink(){
-        for (int i = 0; i < neighbors.size(); i++) {
-            neighbors.get(i).weight = Main.getCities().get(neighbors.get(i).city_id).getCoordinate().heightDifference(this.coordinate);
+    public void calculateLink(Vehicle vehicle){
+            //zero fuel on difference in altitude
+            if(vehicle.getVehicle_type() == 0){
+                for (int i = 0; i < neighbors.size(); i++) {
+                    neighbors.get(i).weight = Main.getCities().get(neighbors.get(i).city_id).getCoordinate().distanceMethod(this.coordinate);
+                }
+            }
+            //add fuel between city on the different altitude
+            if(vehicle.getVehicle_type() == 1){
+                for (int i = 0; i < neighbors.size(); i++) {
+                    neighbors.get(i).weight = Main.getCities().get(neighbors.get(i).city_id).getCoordinate().heightDifference(this.coordinate);
+            }
         }
 
     }
