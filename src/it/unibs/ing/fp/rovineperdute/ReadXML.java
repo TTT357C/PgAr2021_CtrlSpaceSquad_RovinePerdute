@@ -1,6 +1,6 @@
 package it.unibs.ing.fp.rovineperdute;
 
-import it.unibs.ing.fp.pathfinding.City;
+import it.unibs.ing.fp.pathfinding.*;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -43,7 +43,7 @@ public class ReadXML {
     /**
      * @author Thomas Causetti
      */
-    public void readCities(ArrayList<it.unibs.ing.fp.rovineperdute.City> cities, String filename) {
+    public void readCities(ArrayList<City> cities, String filename) {
 
         XMLStreamReader xmlr=xmlStreamReaderGenerator(filename);
         try {
@@ -74,18 +74,18 @@ public class ReadXML {
                             //Add links
                             //========================================================
 
-                            ArrayList<City> read_cities =new ArrayList<>();
+                            ArrayList<Link> read_link =new ArrayList<>();
                             continueToStart(xmlr);
-                            int cont=0;
                             while(xmlr.getLocalName().equals("link")) {
                                 System.out.println(xmlr.getLocalName());
-                                read_cities.add(new City(Double.parseDouble(xmlr.getAttributeValue(0))));
+                                read_link.add(new Link(Integer.parseInt(xmlr.getAttributeValue(0))));
                                 int check=continueToStart(xmlr);
                                 if(check==-1){
                                     break;
                                 }
                             }
-                            cities.add(new it.unibs.ing.fp.rovineperdute.City(Integer.parseInt(read_att.get(0)), read_att.get(1), (new Coordinates(Integer.parseInt(read_att.get(2)), Integer.parseInt(read_att.get(3)), Integer.parseInt(read_att.get(4)))), read_cities));
+                            cities.add(new City(Integer.parseInt(read_att.get(0)), read_att.get(1), (new Coordinates(Integer.parseInt(read_att.get(2)), Integer.parseInt(read_att.get(3)), Integer.parseInt(read_att.get(4)))), read_link));
+
                         }
                         break;
 
@@ -96,7 +96,14 @@ public class ReadXML {
 
                 //Continue if xmlr.hasNext(), else not needed it will end anyway with the while cycle.
                 if(xmlr.hasNext()) {
-                    xmlr.next();
+                    if(xmlr.getEventType()== XMLStreamConstants.START_ELEMENT) {
+                        if (!xmlr.getLocalName().equals("city")) {
+                            xmlr.next();
+                        }
+                    }
+                    else {
+                        xmlr.next();
+                    }
                 }
             }
         }catch (Exception e){

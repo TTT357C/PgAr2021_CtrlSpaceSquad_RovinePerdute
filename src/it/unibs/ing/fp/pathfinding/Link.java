@@ -1,11 +1,19 @@
 package it.unibs.ing.fp.pathfinding;
 
 public class Link {
-    Link(int weight, City node){
-        this.weight = weight;
-        this.node = node;
+    public double weight;
+    public int city_id;
+
+    public Link(int city_id){
+        this.weight = 0;
+        this.city_id = city_id;
     }
 
-    public int weight;
-    public City node;
+    @Override
+    public String toString() {
+        return "Link{" +
+                "weight=" + weight +
+                ", city_id=" + city_id +
+                '}';
+    }
 }

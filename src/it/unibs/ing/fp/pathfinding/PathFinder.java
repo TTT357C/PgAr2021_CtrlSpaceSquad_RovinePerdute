@@ -1,11 +1,16 @@
 package it.unibs.ing.fp.pathfinding;
 
+import it.unibs.ing.fp.rovineperdute.Main;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.PriorityQueue;
 
 public class PathFinder {
-    public static City aStar(City start, City target){
+    public static City aStar(int start_, int target_){
+
+        City start=Main.getCities().get(start_);
+        City target=Main.getCities().get(target_);
 
         PriorityQueue<City> closedList = new PriorityQueue<>();
         PriorityQueue<City> openList = new PriorityQueue<>();
@@ -21,7 +26,8 @@ public class PathFinder {
             }
 
             for(Link edge : n.neighbors){
-                City m = edge.node;
+                int m_int = edge.city_id;
+                City m=Main.getCities().get(m_int);
                 double totalWeight = n.g + edge.weight;
 
                 if(!openList.contains(m) && !closedList.contains(m)){
@@ -49,8 +55,9 @@ public class PathFinder {
         return null;
     }
 
-    public static void printPath(City target){
-        City n = target;
+    public static void printPath(int target){
+
+        City n=Main.getCities().get(target);
 
         if(n==null)
             return;
