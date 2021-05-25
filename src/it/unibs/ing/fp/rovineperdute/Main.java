@@ -12,16 +12,16 @@ public class Main {
     public static void main(String[] args) {
         ReadXML read= new ReadXML();
         cities=new ArrayList<>();
-        read.readCities(cities,"test_file/PgAr_Map_5.xml");
+        read.readCities(cities,"test_file/PgAr_Map_10000.xml");
 
         for (City city:cities) {
             city.calculateLink();
         }
 
-        PathFinder.aStar(0,4);
-        PathFinder.printPath(4);
+        PathFinder.aStar(0,9999);
+        PathFinder.printPath(9999);
 
-        System.out.println(cities);
+        //System.out.println(cities);
     }
 
     public static ArrayList<City> getCities() {
