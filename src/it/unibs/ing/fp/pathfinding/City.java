@@ -17,8 +17,8 @@ public class City implements Comparable<City> {
     public ArrayList<Link> neighbors;
 
     // Evaluation functions
-    public double f = 0;
-    public double g = 0;
+    public double f = 1000000;
+    public double g = 1000000;
     //public double g = Double.MAX_VALUE;
     // Hardcoded heuristic
     public double h;
