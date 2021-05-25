@@ -12,7 +12,7 @@ public class Main {
     private static ArrayList<City> cities;
 
     public static void main(String[] args) {
-        int numero=50;
+        int numero=10000;
         ReadXML read= new ReadXML();
         cities=new ArrayList<>();
         read.readCities(cities,"test_file/PgAr_Map_"+numero+".xml");

@@ -35,6 +35,7 @@ public class Vehicle {
         if(vehicle_type == 1){
 
         }
+        return 0;
     }
 
 }
