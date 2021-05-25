@@ -41,7 +41,7 @@ public class ReadXML {
     /**
      * @author Thomas Causetti
      */
-    public void leggiPersone(ArrayList<City> cities, String filename) {
+    public void readCities(ArrayList<City> cities, String filename) {
 
         XMLStreamReader xmlr=xmlStreamReaderGenerator(filename);
         try {
