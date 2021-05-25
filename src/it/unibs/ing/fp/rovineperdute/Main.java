@@ -6,6 +6,7 @@ public class Main {
     public static void main(String[] args) {
         ReadXML read= new ReadXML();
         ArrayList<City> cities=new ArrayList<>();
-        read.readCities(cities,"PgAr_Map_5.xml");
+        read.readCities(cities,"test_file/PgAr_Map_5.xml");
+        System.out.println(cities);
     }
 }

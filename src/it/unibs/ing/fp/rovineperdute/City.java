@@ -24,4 +24,20 @@ public class City {
         links = new ArrayList<Link>();
     }
 
+    public City(int id, String name, Coordinates coordinate, ArrayList<Link> links) {
+        this.id = id;
+        this.name = name;
+        this.coordinate = coordinate;
+        this.links = links;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", coordinate=" + coordinate +
+                ", links=" + links +
+                '}';
+    }
 }

@@ -18,7 +18,7 @@ public class Link implements Comparable<Link> {
     // Hardcoded heuristic
     public double h;
 
-    Link(double h){
+    public Link(double h){
         this.h = h;
         this.id = idCounter++;
         this.neighbors = new ArrayList<Edge>();
@@ -46,5 +46,17 @@ public class Link implements Comparable<Link> {
 
     public double calculateHeuristic(Link target){
         return this.h;
+    }
+
+    @Override
+    public String toString() {
+        return "Link{" +
+                "id=" + id +
+                ", parent=" + parent +
+                ", neighbors=" + neighbors +
+                ", f=" + f +
+                ", g=" + g +
+                ", h=" + h +
+                '}';
     }
 }

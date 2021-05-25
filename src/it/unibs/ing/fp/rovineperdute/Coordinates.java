@@ -54,4 +54,13 @@ public class Coordinates {
 
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Coordinates{" +
+                "coordinate_x=" + coordinate_x +
+                ", coordinate_y=" + coordinate_y +
+                ", coordinate_z=" + coordinate_z +
+                '}';
+    }
 }

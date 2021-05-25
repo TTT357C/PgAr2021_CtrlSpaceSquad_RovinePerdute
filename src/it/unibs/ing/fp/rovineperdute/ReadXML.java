@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.rovineperdute;
 
+import it.unibs.ing.fp.pathfinding.Link;
+
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -60,19 +62,30 @@ public class ReadXML {
                     case XMLStreamConstants.START_ELEMENT:
                         //Attributes
                         //========================================================
-                        ArrayList<String> letto_att=new ArrayList<>();
+                        ArrayList<String> read_att=new ArrayList<>();
                         for (int i = 0; i < xmlr.getAttributeCount(); i++) {
-                            letto_att.add(xmlr.getAttributeName(i)+"");
+                            if (xmlr.getLocalName().equals("city")) {
+                                read_att.add(xmlr.getAttributeValue(i) + "");
+                            }
                         }
                         //========================================================
 
-                        //Add links
-                        //========================================================
-                        ArrayList<String> letto=new ArrayList<>();
-                        leggiOggettiXml(letto,xmlr, "city");
-                        if(letto.size()!=0){
+                        if (read_att.size()!=0) {
+                            //Add links
+                            //========================================================
 
-                            cities.add(new City(Integer.parseInt(letto_att.get(0)),letto_att.get(1),(new Coordinates(Integer.parseInt(letto_att.get(2)),Integer.parseInt(letto_att.get(3)),Integer.parseInt(letto_att.get(4))))));
+                            ArrayList<Link> read_links=new ArrayList<>();
+                            continueToStart(xmlr);
+                            int cont=0;
+                            while(xmlr.getLocalName().equals("link")) {
+                                System.out.println(xmlr.getLocalName());
+                                read_links.add(new Link(Double.parseDouble(xmlr.getAttributeValue(0))));
+                                int check=continueToStart(xmlr);
+                                if(check==-1){
+                                    break;
+                                }
+                            }
+                            cities.add(new City(Integer.parseInt(read_att.get(0)), read_att.get(1), (new Coordinates(Integer.parseInt(read_att.get(2)), Integer.parseInt(read_att.get(3)), Integer.parseInt(read_att.get(4)))),read_links));
                         }
                         break;
 
@@ -81,7 +94,10 @@ public class ReadXML {
                 }
                 //--- End Switch --------------------------------------
 
-                xmlr.next();
+                //Continue if xmlr.hasNext(), else not needed it will end anyway with the while cycle.
+                if(xmlr.hasNext()) {
+                    xmlr.next();
+                }
             }
         }catch (Exception e){
             System.err.println(e.getMessage());
@@ -89,66 +105,22 @@ public class ReadXML {
 
     }
 
-
     //========================================================================================================
     /**
      * Metodo che continua a ciclare fino al prossimo getEventType() --> XMLStreamConstants.CHARACTERS
      * @param xmlr XMLStreamReader
      * @throws XMLStreamException throws exception
      */
-    private void continuaFinoCaratteri(XMLStreamReader xmlr) throws XMLStreamException {
+    private int continueToStart(XMLStreamReader xmlr) throws XMLStreamException {
         do{
-            xmlr.next();
-        }while(xmlr.getEventType()!= XMLStreamConstants.CHARACTERS);
+            if(xmlr.hasNext()) {
+                xmlr.next();
+            }
+            else {
+                return -1;
+            }
+        }while(xmlr.getEventType()!= XMLStreamConstants.START_ELEMENT);
+        return 0;
     }
-
-
-    //========================================================================================================
-    /**
-     * Metodo che ritorna un ArrayList di stringhe contenente i diversi attributi di un oggetto.
-     * @param letto Arraylist dove vengono salvate le strighe (Passaggio per riferimento)
-     * @param xmlr XMLStreamReader attuale
-     * @param tag_input e' la stringa del nome del tag xml che contiene tutti gli attributi dell' oggetto (esempio: comune)
-     */
-    public void leggiOggettiXml(ArrayList<String> letto, XMLStreamReader xmlr, String tag_input){
-        boolean fine;
-        //solo se stringa
-        if(xmlr.getLocalName().equals(tag_input)){
-            fine=false;
-            //va avanti finché non trova un area di testo
-            do {
-                //Continua a leggere finche' non trova un getEventType() == XMLStreamConstants.CHARACTERS
-                try {
-                    continuaFinoCaratteri(xmlr);
-                } catch (XMLStreamException e) {
-                    System.err.println(e.getMessage());
-                }
-
-                //Se ci sono caratteri li aggiunge ad array
-                if(xmlr.getText().trim().length() > 0) {
-                    letto.add(xmlr.getText());
-                }
-
-                //Avanza di uno (Passa a quello dopo CHARACTERS)
-                try {
-                    xmlr.next();
-                } catch (XMLStreamException e) {
-                    System.out.println(e.getMessage());
-                }
-
-                //Controlla se e' un END_ELEMENT
-                if(xmlr.getEventType()==XMLStreamConstants.END_ELEMENT){
-
-                    //Controlla se e' l'END_ELEMENT di tag_input
-                    if(xmlr.getLocalName().equalsIgnoreCase(tag_input)) {
-                        fine = true;
-                    }
-                }
-
-            }while(!fine);
-
-        }
-    }
-    //========================================================================================================
 }
 
