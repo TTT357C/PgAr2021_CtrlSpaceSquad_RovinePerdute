@@ -1,7 +1,5 @@
 package it.unibs.ing.fp.rovineperdute;
 
-import it.unibs.ing.fp.pathfinding.Link;
-
 import java.util.ArrayList;
 
 public class City {
@@ -9,7 +7,7 @@ public class City {
     private int id;
     private String name;
     private Coordinates coordinate;
-    private ArrayList <Link> links;
+    private ArrayList <it.unibs.ing.fp.pathfinding.City> cities;
 
     /**
      * City Constructor method, for the creation of the city
@@ -21,14 +19,14 @@ public class City {
         this.id = id;
         this.name = name;
         this.coordinate = coordinate;
-        links = new ArrayList<Link>();
+        cities = new ArrayList<it.unibs.ing.fp.pathfinding.City>();
     }
 
-    public City(int id, String name, Coordinates coordinate, ArrayList<Link> links) {
+    public City(int id, String name, Coordinates coordinate, ArrayList<it.unibs.ing.fp.pathfinding.City> cities) {
         this.id = id;
         this.name = name;
         this.coordinate = coordinate;
-        this.links = links;
+        this.cities = cities;
     }
 
     @Override
@@ -37,7 +35,7 @@ public class City {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", coordinate=" + coordinate +
-                ", links=" + links +
+                ", links=" + cities +
                 '}';
     }
 }

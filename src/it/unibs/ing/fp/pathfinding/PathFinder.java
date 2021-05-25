@@ -5,23 +5,23 @@ import java.util.Collections;
 import java.util.PriorityQueue;
 
 public class PathFinder {
-    public static Link aStar(Link start, Link target){
+    public static City aStar(City start, City target){
 
-        PriorityQueue<Link> closedList = new PriorityQueue<>();
-        PriorityQueue<Link> openList = new PriorityQueue<>();
+        PriorityQueue<City> closedList = new PriorityQueue<>();
+        PriorityQueue<City> openList = new PriorityQueue<>();
 
         //Calcolo Euristico
         start.f = start.g + start.calculateHeuristic(target);
         openList.add(start);
 
         while(!openList.isEmpty()){
-            Link n = openList.peek();
+            City n = openList.peek();
             if(n == target){
                 return n;
             }
 
-            for(Link.Edge edge : n.neighbors){
-                Link m = edge.node;
+            for(Link edge : n.neighbors){
+                City m = edge.node;
                 double totalWeight = n.g + edge.weight;
 
                 if(!openList.contains(m) && !closedList.contains(m)){
@@ -49,8 +49,8 @@ public class PathFinder {
         return null;
     }
 
-    public static void printPath(Link target){
-        Link n = target;
+    public static void printPath(City target){
+        City n = target;
 
         if(n==null)
             return;

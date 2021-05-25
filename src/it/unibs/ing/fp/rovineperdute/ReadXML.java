@@ -1,6 +1,6 @@
 package it.unibs.ing.fp.rovineperdute;
 
-import it.unibs.ing.fp.pathfinding.Link;
+import it.unibs.ing.fp.pathfinding.City;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -43,7 +43,7 @@ public class ReadXML {
     /**
      * @author Thomas Causetti
      */
-    public void readCities(ArrayList<City> cities, String filename) {
+    public void readCities(ArrayList<it.unibs.ing.fp.rovineperdute.City> cities, String filename) {
 
         XMLStreamReader xmlr=xmlStreamReaderGenerator(filename);
         try {
@@ -74,18 +74,18 @@ public class ReadXML {
                             //Add links
                             //========================================================
 
-                            ArrayList<Link> read_links=new ArrayList<>();
+                            ArrayList<City> read_cities =new ArrayList<>();
                             continueToStart(xmlr);
                             int cont=0;
                             while(xmlr.getLocalName().equals("link")) {
                                 System.out.println(xmlr.getLocalName());
-                                read_links.add(new Link(Double.parseDouble(xmlr.getAttributeValue(0))));
+                                read_cities.add(new City(Double.parseDouble(xmlr.getAttributeValue(0))));
                                 int check=continueToStart(xmlr);
                                 if(check==-1){
                                     break;
                                 }
                             }
-                            cities.add(new City(Integer.parseInt(read_att.get(0)), read_att.get(1), (new Coordinates(Integer.parseInt(read_att.get(2)), Integer.parseInt(read_att.get(3)), Integer.parseInt(read_att.get(4)))),read_links));
+                            cities.add(new it.unibs.ing.fp.rovineperdute.City(Integer.parseInt(read_att.get(0)), read_att.get(1), (new Coordinates(Integer.parseInt(read_att.get(2)), Integer.parseInt(read_att.get(3)), Integer.parseInt(read_att.get(4)))), read_cities));
                         }
                         break;
 
