@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.PriorityQueue;
 
 public class PathFinder {
+
+    private static int number_city;
+
     public static City aStar(int start_, int target_){
 
         City start=Main.getCities().get(start_);
@@ -55,12 +58,12 @@ public class PathFinder {
         return null;
     }
 
-    public static void printPath(int target){
+    public static int printPath(int target){
 
         City n=Main.getCities().get(target);
 
         if(n==null)
-            return;
+            return -1;
 
         ArrayList<Integer> ids = new ArrayList<>();
 
@@ -75,12 +78,28 @@ public class PathFinder {
         for(int id : ids){
             if(cont!=0) {
                 System.out.print(" => ");
-
             }
             System.out.print(id);
             cont++;
         }
         System.out.println();
+
+        //Sum and number of city calculation
+        int sum=0;
+        number_city=0;
+        for (int i = 0; i < ids.size()-1; i++) {
+            for (int j = 0; j < Main.getCities().get(ids.get(i)).getNeighbors().size(); j++) {
+                if (Main.getCities().get(ids.get(i)).getNeighbors().get(j).city_id==ids.get(i+1)) {
+                    sum+=(Main.getCities().get(ids.get(i)).getNeighbors().get(j).weight);
+                    number_city++;
+                }
+            }
+        }
+        return sum;
+    }
+
+    public static int getNumber_city() {
+        return number_city;
     }
 }
 

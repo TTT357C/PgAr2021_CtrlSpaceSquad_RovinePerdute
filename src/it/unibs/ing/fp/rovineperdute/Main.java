@@ -26,7 +26,10 @@ public class Main {
         }
 
         PathFinder.aStar(0, numero - 1);
-        PathFinder.printPath(numero - 1);
+        System.out.println(PathFinder.printPath(numero - 1));
+
+        //Numero citta' toccate
+        System.out.println(PathFinder.getNumber_city());
 
         //matrix
         if(numero<100) {
@@ -57,6 +60,8 @@ public class Main {
                 e.printStackTrace();
             }
         }
+
+
 
         //System.out.println(cities);
     }
