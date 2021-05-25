@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class City implements Comparable<City> {
     // Id for readability of result purposes
-    private static int idCounter = 0;
     public int id;
 
     // Parent in the path
@@ -27,10 +26,12 @@ public class City implements Comparable<City> {
     private Coordinates coordinate;
     private ArrayList <Link> cities;
 
-    public City(double h){
-        this.h = h;
-        this.id = idCounter++;
-        this.neighbors = new ArrayList<Link>();
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     /**

@@ -24,10 +24,7 @@ public class WriteXML {
      * Method for the creation of the xml file
      * @author Rossi Mirko
      */
-
-    //TODO finish
-
-    public void writeXML(){
+     public void writeXML(Vehicle vehicle_a, Vehicle vehicle_b){
 
         //writing encoding and xml file version
 
@@ -52,11 +49,43 @@ public class WriteXML {
         try {
             xmlw.writeStartElement("routes");
 
-            /*
 
-            TAG XML
+            xmlw.writeStartElement("route");
+            xmlw.writeAttribute("name", vehicle_a.getTeam_name());
+            xmlw.writeAttribute("cost", String.valueOf(vehicle_a.getFuel()));
+            xmlw.writeAttribute("cities", String.valueOf(vehicle_a.getTouched_cities().size()));
 
-             */
+            for(int i=0; i<vehicle_a.getTouched_cities().size(); i++){
+
+                xmlw.writeStartElement("city");
+                xmlw.writeAttribute("id", String.valueOf(vehicle_a.getTouched_cities().get(i).getId()));
+                xmlw.writeAttribute("name", vehicle_a.getTouched_cities().get(i).getName());
+
+                //tag "city" close
+                xmlw.writeEndElement();
+            }
+
+            //tag "route" close
+            xmlw.writeEndElement();
+
+
+            xmlw.writeStartElement("route");
+            xmlw.writeAttribute("name", vehicle_b.getTeam_name());
+            xmlw.writeAttribute("cost", String.valueOf(vehicle_b.getFuel()));
+            xmlw.writeAttribute("cities", String.valueOf(vehicle_b.getTouched_cities().size()));
+
+            for(int i=0; i<vehicle_b.getTouched_cities().size(); i++){
+
+                xmlw.writeStartElement("city");
+                xmlw.writeAttribute("id", String.valueOf(vehicle_b.getTouched_cities().get(i).getId()));
+                xmlw.writeAttribute("name", vehicle_b.getTouched_cities().get(i).getName());
+
+                //tag "city" close
+                xmlw.writeEndElement();
+            }
+
+            //tag "route" close
+            xmlw.writeEndElement();
 
             //tag "routes" close
             xmlw.writeEndElement();
