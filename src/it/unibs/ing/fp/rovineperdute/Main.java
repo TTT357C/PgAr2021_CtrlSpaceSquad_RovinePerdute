@@ -18,7 +18,7 @@ public class Main {
         read.readCities(cities,"test_file/PgAr_Map_"+numero+".xml");
 
         for (City city:cities) {
-            city.calculateLink();
+            city.calculateLink(new Vehicle("Tonathiu",0));
         }
 
         for (int i = cities.size()-1; i >=0 ; i--) {
@@ -32,7 +32,7 @@ public class Main {
         System.out.println(PathFinder.getNumber_city());
 
         //matrix
-        if(numero<100) {
+        if(numero<250) {
             double mat[][] = new double[numero][numero];
 
             for (int i = 0; i < cities.size(); i++) {
