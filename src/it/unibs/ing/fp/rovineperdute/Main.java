@@ -1,5 +1,6 @@
 package it.unibs.ing.fp.rovineperdute;
 import it.unibs.ing.fp.pathfinding.City;
+import it.unibs.ing.fp.pathfinding.Link;
 import it.unibs.ing.fp.pathfinding.PathFinder;
 
 import java.io.FileWriter;
@@ -10,11 +11,14 @@ import java.util.ArrayList;
 public class Main {
 
     private static ArrayList<City> cities;
+    private static ArrayList<City> cities_temp;
 
     public static void main(String[] args) {
-        int numero=10000;
+        int numero=200;
         ReadXML read= new ReadXML();
         cities=new ArrayList<>();
+        cities_temp=new ArrayList<>();
+
         read.readCities(cities,"test_file/PgAr_Map_"+numero+".xml");
 
         for (City city:cities) {
@@ -25,12 +29,53 @@ public class Main {
             cities.get(i).h=i;
         }
 
-        PathFinder.aStar(0, numero - 1);
-        System.out.println(PathFinder.printPath(numero - 1));
+        PathFinder pathFinder=new PathFinder();
+
+        System.out.println(pathFinder.aStar(0, numero - 1));;
+        cities_temp=cities;
+
+        ArrayList<Integer> ids = pathFinder.printPath(numero - 1);
+
+        pathFinder.viewPath(ids);
+        double total_sum = pathFinder.sumFuel(ids);
+        System.out.println(total_sum);
 
         //Numero citta' toccate
-        System.out.println(PathFinder.getNumber_city());
+        int number = pathFinder.getNumber_city();
+        System.out.println(number);
 
+        int cont=1;
+        int cont2=0;
+
+        System.out.println("Caricamento...");
+        System.out.println("[");
+        /*
+        for (int i = 0; i < ids.size()-1; i++) {
+            int index=ids.get(i);
+            for (int j = 0; j < cities.get(index).getNeighbors().size(); j++) {
+                if (cities.get(index).getNeighbors().get(j).city_id == ids.get(cont)) {
+                    Link temp = cities.get(index).getNeighbors().get(j);
+                    cities.get(index).getNeighbors().remove(j);
+                    cont++;
+                    PathFinder pathFinder2 = new PathFinder();
+                    pathFinder2.aStar(0, numero - 1);
+                    cities.get(index).getNeighbors().add(j, temp);
+
+                    ArrayList<Integer> ids2;
+                    ids2=pathFinder2.printPath(numero - 1);
+                    int sum = pathFinder2.sumFuel(ids2);
+                    pathFinder2.viewPath(ids2);
+                    System.out.println(sum);
+                    //System.out.print("=");
+                    if(sum == total_sum){
+                        System.out.println("Uguale");
+                    }
+                    break;
+                }
+            }
+        }
+        */
+        System.out.print("]");
         //matrix
         if(numero<250) {
             double mat[][] = new double[numero][numero];

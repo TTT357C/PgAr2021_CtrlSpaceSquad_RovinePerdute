@@ -8,9 +8,11 @@ import java.util.PriorityQueue;
 
 public class PathFinder {
 
-    private static int number_city;
+    private int number_city;
 
-    public static City aStar(int start_, int target_){
+    public ArrayList <Integer> aStar(int start_, int target_){
+
+        ArrayList <Integer> equals_path_index=new ArrayList <Integer>();
 
         City start=Main.getCities().get(start_);
         City target=Main.getCities().get(target_);
@@ -25,7 +27,7 @@ public class PathFinder {
         while(!openList.isEmpty()){
             City n = openList.peek();
             if(n == target){
-                return n;
+                return equals_path_index;
             }
 
             for(Link edge : n.neighbors){
@@ -49,21 +51,25 @@ public class PathFinder {
                             openList.add(m);
                         }
                     }
+                    else if(totalWeight == m.g){
+                        System.out.println("Uguale");
+                        equals_path_index.add(m.id);
+                    }
                 }
             }
 
             openList.remove(n);
             closedList.add(n);
         }
-        return null;
+        return equals_path_index;
     }
 
-    public static int printPath(int target){
+    public ArrayList<Integer> printPath(int target){
 
         City n=Main.getCities().get(target);
 
         if(n==null)
-            return -1;
+            return (new ArrayList<Integer>());
 
         ArrayList<Integer> ids = new ArrayList<>();
 
@@ -74,6 +80,10 @@ public class PathFinder {
         ids.add(n.id);
         Collections.reverse(ids);
 
+        return ids;
+    }
+
+    public void viewPath(ArrayList<Integer> ids) {
         int cont=0;
         for(int id : ids){
             if(cont!=0) {
@@ -83,13 +93,15 @@ public class PathFinder {
             cont++;
         }
         System.out.println();
+    }
 
+    public double sumFuel(ArrayList<Integer> ids) {
         //Sum and number of city calculation
-        int sum=0;
+        double sum=0;
         number_city=0;
         for (int i = 0; i < ids.size()-1; i++) {
             for (int j = 0; j < Main.getCities().get(ids.get(i)).getNeighbors().size(); j++) {
-                if (Main.getCities().get(ids.get(i)).getNeighbors().get(j).city_id==ids.get(i+1)) {
+                if (Main.getCities().get(ids.get(i)).getNeighbors().get(j).city_id== ids.get(i+1)) {
                     sum+=(Main.getCities().get(ids.get(i)).getNeighbors().get(j).weight);
                     number_city++;
                 }
@@ -98,7 +110,9 @@ public class PathFinder {
         return sum;
     }
 
-    public static int getNumber_city() {
+
+
+    public int getNumber_city() {
         return number_city;
     }
 }
