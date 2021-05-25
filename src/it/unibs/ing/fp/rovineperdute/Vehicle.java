@@ -25,17 +25,7 @@ public class Vehicle {
         return team_name;
     }
 
-    public double calculateFuel(){
-        //calculation fuel for team tonatiuh
-        if(vehicle_type == 0){
-
-        }
-
-        //calculation fuel for team Metztli
-        if(vehicle_type == 1){
-
-        }
-        return 0;
+    public int getVehicle_type() {
+        return vehicle_type;
     }
-
 }
