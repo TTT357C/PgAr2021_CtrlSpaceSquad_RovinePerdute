@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.rovineperdute;
 
+import it.unibs.ing.fp.pathfinding.Link;
+
 import java.util.ArrayList;
 
 public class City {
