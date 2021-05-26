@@ -5,6 +5,7 @@ import it.unibs.ing.fp.rovineperdute.Main;
 import it.unibs.ing.fp.rovineperdute.Vehicle;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class City implements Comparable<City> {
     // Id for readability of result purposes
@@ -73,11 +74,20 @@ public class City implements Comparable<City> {
                 }
             }
             //add fuel between city on the different altitude
-            if(vehicle.getVehicle_type() == 1){
+            if(vehicle.getVehicle_type() == 1) {
                 for (int i = 0; i < neighbors.size(); i++) {
                     neighbors.get(i).weight = Main.getCities().get(neighbors.get(i).city_id).getCoordinate().heightDifference(this.coordinate);
+
+                }
             }
-        }
+            //for testing
+            if(vehicle.getVehicle_type() == -1){
+                Random rand= new Random();
+                for (int i = 0; i < neighbors.size(); i++) {
+                    neighbors.get(i).weight = rand.nextInt(1000 - 1 + 1) + 1;
+                }
+            }
+
 
     }
 

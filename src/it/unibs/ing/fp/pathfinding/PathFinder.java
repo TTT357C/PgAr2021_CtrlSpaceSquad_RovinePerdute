@@ -51,9 +51,9 @@ public class PathFinder {
                             openList.add(m);
                         }
                     }
-                    else if(totalWeight == m.g){
-                        System.out.println("Uguale");
-                        equals_path_index.add(m.id);
+                    else if(Math.abs(totalWeight-m.g)<0.000001){
+                        //System.out.println("Uguale");
+                        equals_path_index.add(m.parent.id);
                     }
                 }
             }
