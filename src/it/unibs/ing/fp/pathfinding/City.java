@@ -9,26 +9,57 @@ import java.util.Random;
 
 public class City implements Comparable<City> {
     // Id for readability of result purposes
-    public int id;
+    private int id;
 
     // Parent in the path
-    public City parent = null;
+    private City parent = null;
 
-    public ArrayList<Link> neighbors;
+    private ArrayList<Link> neighbors;
 
     // Evaluation functions
-    public double f = 0;
-    public double g = 0;
+    private double f = 0;
+    private double g = 0;
     //public double g = Double.MAX_VALUE;
     // Hardcoded heuristic
-    public double h;
+    private double h;
 
     private String name;
     private Coordinates coordinate;
-    private ArrayList <Link> cities;
 
     public int getId() {
         return id;
+    }
+
+    public City getParent() {
+        return parent;
+    }
+
+    public double getF() {
+        return f;
+    }
+
+    public double getG() {
+        return g;
+    }
+
+    public double getH() {
+        return h;
+    }
+
+    public void setH(double h) {
+        this.h = h;
+    }
+
+    public void setF(double f) {
+        this.f = f;
+    }
+
+    public void setG(double g) {
+        this.g = g;
+    }
+
+    public void setParent(City parent) {
+        this.parent = parent;
     }
 
     public String getName() {
@@ -102,7 +133,6 @@ public class City implements Comparable<City> {
                 ", h=" + h +
                 ", name='" + name + '\'' +
                 ", coordinate=" + coordinate +
-                ", cities=" + cities +
                 "}\n";
     }
 

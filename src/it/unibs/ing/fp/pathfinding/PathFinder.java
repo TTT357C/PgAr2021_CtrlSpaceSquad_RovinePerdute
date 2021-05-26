@@ -10,9 +10,7 @@ public class PathFinder {
 
     private int number_city;
 
-    public ArrayList <Integer> aStar(int start_, int target_){
-
-        ArrayList <Integer> equals_path_index=new ArrayList <Integer>();
+    public int aStar(int start_, int target_){
 
         City start=Main.getCities().get(start_);
         City target=Main.getCities().get(target_);
@@ -21,39 +19,35 @@ public class PathFinder {
         PriorityQueue<City> openList = new PriorityQueue<>();
 
         //Calcolo Euristico
-        start.f = start.g + start.calculateHeuristic(target);
+        start.setF(start.getG() + start.calculateHeuristic(target));
         openList.add(start);
 
         while(!openList.isEmpty()){
             City n = openList.peek();
             if(n == target){
-                return equals_path_index;
+                return -1;
             }
 
-            for(Link edge : n.neighbors){
+            for(Link edge : n.getNeighbors()){
                 int m_int = edge.city_id;
                 City m=Main.getCities().get(m_int);
-                double totalWeight = n.g + edge.weight;
+                double totalWeight = n.getG() + edge.weight;
 
                 if(!openList.contains(m) && !closedList.contains(m)){
-                    m.parent = n;
-                    m.g = totalWeight;
-                    m.f = m.g + m.calculateHeuristic(target);
+                    m.setParent(n);
+                    m.setG(totalWeight);
+                    m.setF(m.getG() + m.calculateHeuristic(target));
                     openList.add(m);
                 } else {
-                    if(totalWeight < m.g){
-                        m.parent = n;
-                        m.g = totalWeight;
-                        m.f = m.g + m.calculateHeuristic(target);
+                    if(totalWeight < m.getG()){
+                        m.setParent(n);
+                        m.setG(totalWeight);
+                        m.setF(m.getG() + m.calculateHeuristic(target));
 
                         if(closedList.contains(m)){
                             closedList.remove(m);
                             openList.add(m);
                         }
-                    }
-                    else if(Math.abs(totalWeight-m.g)<0.000001){
-                        //System.out.println("Uguale");
-                        equals_path_index.add(m.parent.id);
                     }
                 }
             }
@@ -61,7 +55,7 @@ public class PathFinder {
             openList.remove(n);
             closedList.add(n);
         }
-        return equals_path_index;
+        return 1;
     }
 
     public ArrayList<Integer> printPath(int target){
@@ -73,11 +67,11 @@ public class PathFinder {
 
         ArrayList<Integer> ids = new ArrayList<>();
 
-        while(n.parent != null){
-            ids.add(n.id);
-            n = n.parent;
+        while(n.getParent() != null){
+            ids.add(n.getId());
+            n = n.getParent();
         }
-        ids.add(n.id);
+        ids.add(n.getId());
         Collections.reverse(ids);
 
         return ids;
@@ -93,6 +87,19 @@ public class PathFinder {
             cont++;
         }
         System.out.println();
+    }
+
+    public void viewPath2(ArrayList<Integer> ids) {
+        int cont=0;
+        System.out.print("[");
+        for(int id : ids){
+            if(cont!=0) {
+                System.out.print("-");
+            }
+            System.out.print(id);
+            cont++;
+        }
+        System.out.println("]");
     }
 
     public double sumFuel(ArrayList<Integer> ids) {

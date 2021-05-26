@@ -1,11 +1,15 @@
 package it.unibs.ing.fp.rovineperdute;
+import it.unibs.ing.fp.altro.Graph;
+import it.unibs.ing.fp.altro.ksp.Yen;
+import it.unibs.ing.fp.altro.util.Path;
 import it.unibs.ing.fp.pathfinding.City;
-import it.unibs.ing.fp.pathfinding.Link;
 import it.unibs.ing.fp.pathfinding.PathFinder;
+import it.unibs.ing.fp.pathfinding.ProgressBar;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main {
@@ -14,76 +18,66 @@ public class Main {
     private static ArrayList<City> cities_temp;
 
     public static void main(String[] args) {
-        int numero=10000;
+        int vertices=10000;
         ReadXML read= new ReadXML();
         cities=new ArrayList<>();
         cities_temp=new ArrayList<>();
 
-        read.readCities(cities,"test_file/PgAr_Map_"+numero+".xml");
+        long timeStartTot = System.currentTimeMillis();
+
+        cities_temp=cities;
+
+        read.readCities(cities,"test_file/PgAr_Map_"+vertices+".xml");
 
         for (City city:cities) {
-            city.calculateLink(new Vehicle("Tonathiu",-1));
+            city.calculateLink(new Vehicle("Tonathiu",1));
         }
 
         for (int i = cities.size()-1; i >=0 ; i--) {
-            cities.get(i).h=i;
+            cities.get(i).setH(i);
         }
+        System.out.println(" "+"____________________________________________________________________________"+"\n");
 
+        System.out.print(" "+"Computing the " + 1 + " shortest paths from [" + 0 + "] to [" + (vertices-1) + "] ");
+        System.out.println(" "+"using A* algorithm.\n");
+
+        ProgressBar.value(0);
+        long timeStart_a = System.currentTimeMillis();
         PathFinder pathFinder=new PathFinder();
+        ProgressBar.value(3);
+        pathFinder.aStar(0, vertices - 1);
+        //System.out.print(".");
+        //System.out.println("complete.");
+        ArrayList<Integer> ids = pathFinder.printPath(vertices - 1);
+        ProgressBar.value(7);
 
-        ArrayList<Integer> index_al_path=pathFinder.aStar(0, numero - 1);
-        ArrayList<Integer> ids = pathFinder.printPath(numero - 1);
-        index_al_path.retainAll(ids);
-        System.out.println(index_al_path);
-        cities_temp=cities;
 
+        ProgressBar.value(10);
 
-
-        pathFinder.viewPath(ids);
         double total_sum = pathFinder.sumFuel(ids);
-        System.out.println(total_sum);
+
+        //System.out.println(total_sum);
+        System.out.println(" "+"n) cost: [path]");
+        System.out.print(" "+1 + ") " +total_sum+": ");
+        pathFinder.viewPath2(ids);
+
 
         //Numero citta' toccate
         int number = pathFinder.getNumber_city();
-        System.out.println(number);
+        System.out.println(" "+number);
+        long timeFinish_a = System.currentTimeMillis();
+        System.out.println(" "+"Operation took " + (timeFinish_a - timeStart_a) / 1000.0 + " seconds.");
+        System.out.println(" "+"____________________________________________________________________________"+"\n");
 
-        int cont=1;
-        int cont2=0;
 
 
 
-        System.out.println("Caricamento...");
-        System.out.println("[");
 
-        for (int i = 0; i < index_al_path.size()-1; i++) {
-            int index=index_al_path.get(i);
-            for (int j = 0; j < cities.get(index).getNeighbors().size(); j++) {
-                if (cities.get(index).getNeighbors().get(j).city_id == ids.get(cont)) {
-                    Link temp = cities.get(index).getNeighbors().get(j);
-                    cities.get(index).getNeighbors().remove(j);
-                    cont++;
-                    PathFinder pathFinder2 = new PathFinder();
-                    pathFinder2.aStar(0, numero - 1);
-                    cities.get(index).getNeighbors().add(j, temp);
 
-                    ArrayList<Integer> ids2;
-                    ids2=pathFinder2.printPath(numero - 1);
-                    double sum = pathFinder2.sumFuel(ids2);
-                    pathFinder2.viewPath(ids2);
-                    System.out.println(sum);
-                    //System.out.print("=");
-                    if(sum == total_sum){
-                        System.out.println("Uguale");
-                    }
-                    break;
-                }
-            }
-        }
-
-        System.out.print("]");
         //matrix
-        if(numero<250) {
-            double mat[][] = new double[numero][numero];
+        /*
+        if(vertices<250) {
+            double mat[][] = new double[vertices][vertices];
 
             for (int i = 0; i < cities.size(); i++) {
                 for (int j = 0; j < cities.get(i).getNeighbors().size(); j++) {
@@ -95,8 +89,8 @@ public class Main {
 
             try {
                 FileWriter myWriter = new FileWriter("Matrice.txt");
-                for (int i = 0; i < numero; i++) {
-                    for (int j = 0; j < numero; j++) {
+                for (int i = 0; i < vertices; i++) {
+                    for (int j = 0; j < vertices; j++) {
                         myWriter.write(((int) mat[i][j]) + ",");
 
                     }
@@ -110,13 +104,84 @@ public class Main {
                 e.printStackTrace();
             }
         }
+        */
+        //=============================================================
+        /*
+        System.out.println("Tutti i percorsi");
+        AllPathfinder allpath = new AllPathfinder(vertices);
+        for (int i = 0; i < cities.size(); i++) {
+            for (int j = 0; j < cities.get(i).getNeighbors().size(); j++) {
+                allpath.addEdge(cities.get(i).getId(),cities.get(i).getNeighbors().get(j).city_id);
+            }
+        }
+        allpath.printAllPaths(0, vertices-1);
+        */
+        //================================================================
+        //Test Yen
 
+        try {
+            FileWriter myWriter = new FileWriter("Matrice2.txt");
+            for (int i = 0; i < cities.size(); i++) {
+                for (int j = 0; j < cities.get(i).getNeighbors().size(); j++) {
+                    myWriter.write(cities.get(i).getId()+" "+cities.get(i).getNeighbors().get(j).city_id+" "+cities.get(i).getNeighbors().get(j).weight);
+                    myWriter.write("\n");
+                }
 
+            }
+            myWriter.close();
+            System.out.println(" "+"Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println(" "+"An error occurred.");
+            e.printStackTrace();
+        }
 
+        /* Uncomment any of these example tests */
+        String graphFilename, sourceNode, targetNode;
+        int K;
+
+        graphFilename = "Matrice2.txt";
+        sourceNode = "0";
+        targetNode = (vertices-1)+"";
+        K = 2;
+
+        System.out.println(" "+"____________________________________________________________________________"+"\n");
+
+        yenInizializer(graphFilename,sourceNode,targetNode,K);
+
+        System.out.println(" "+"____________________________________________________________________________"+"\n");
+
+        long timeFinishTot = System.currentTimeMillis();
+        System.out.println(" "+"Total operation took " + (timeFinishTot - timeStartTot) / 1000.0 + " seconds.");
         //System.out.println(cities);
     }
 
     public static ArrayList<City> getCities() {
         return cities;
+    }
+
+    public static void yenInizializer(String graphFilename, String source, String target, int k) {
+        /* Read graph from file */
+        System.out.print(" "+"Reading data from file... ");
+        Graph graph = new Graph(graphFilename);
+        System.out.println("complete.");
+
+        /* Compute the K shortest paths and record the completion time */
+        System.out.print(" "+"Computing the " + k + " shortest paths from [" + source + "] to [" + target + "] ");
+        System.out.println("using Yen's algorithm.\n");
+        List<Path> ksp;
+        long timeStart = System.currentTimeMillis();
+        Yen yenAlgorithm = new Yen();
+        ksp = yenAlgorithm.ksp(graph, source, target, k);
+        long timeFinish = System.currentTimeMillis();
+        System.out.println(" Complete");
+
+        System.out.println(" "+"Operation took " + (timeFinish - timeStart) / 1000.0 + " seconds.");
+
+        /* Output the K shortest paths */
+        System.out.println(" "+"n) cost: [path]");
+        int n = 0;
+        for (Path p : ksp) {
+            System.out.println(" "+ (++n) + ") " + p.toString());
+        }
     }
 }
