@@ -2,6 +2,7 @@ package it.unibs.ing.fp.rovineperdute;
 import it.unibs.ing.fp.altro.Graph;
 import it.unibs.ing.fp.altro.ksp.Yen;
 import it.unibs.ing.fp.altro.util.Path;
+import it.unibs.ing.fp.mylib.InputDati;
 import it.unibs.ing.fp.pathfinding.City;
 import it.unibs.ing.fp.pathfinding.PathFinder;
 import it.unibs.ing.fp.pathfinding.ProgressBar;
@@ -9,68 +10,65 @@ import it.unibs.ing.fp.pathfinding.ProgressBar;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
 public class Main {
 
-    private static ArrayList<City> cities;
-    private static ArrayList<City> cities_temp;
+
+    public static final String LINE = " " + "____________________________________________________________________________" + "\n";
 
     public static void main(String[] args) {
-        int vertices=10000;
+        int vertices=13;
         ReadXML read= new ReadXML();
-        cities=new ArrayList<>();
-        cities_temp=new ArrayList<>();
-
-        long timeStartTot = System.currentTimeMillis();
-
-        cities_temp=cities;
+        ArrayList<City> cities=new ArrayList<>();
+        ArrayList<City> cities_temp=new ArrayList<>();
 
         read.readCities(cities,"test_file/PgAr_Map_"+vertices+".xml");
+        read.readCities(cities_temp,"test_file/PgAr_Map_"+vertices+".xml");
 
         for (City city:cities) {
-            city.calculateLink(new Vehicle("Tonathiu",1));
+            city.calculateLink(new Vehicle("Tonathiu",0),cities);
         }
 
-        for (int i = cities.size()-1; i >=0 ; i--) {
-            cities.get(i).setH(i);
+        for (City city:cities_temp) {
+            city.calculateLink(new Vehicle("Metztli",1),cities_temp);
         }
-        System.out.println(" "+"____________________________________________________________________________"+"\n");
 
-        System.out.print(" "+"Computing the " + 1 + " shortest paths from [" + 0 + "] to [" + (vertices-1) + "] ");
-        System.out.println(" "+"using A* algorithm.\n");
+        System.out.println("\n" +
+                "__________            .__                __________                 .___      __          \n" +
+                "\\______   \\ _______  _|__| ____   ____   \\______   \\ ___________  __| _/_ ___/  |_  ____  \n" +
+                " |       _//  _ \\  \\/ /  |/    \\_/ __ \\   |     ___// __ \\_  __ \\/ __ |  |  \\   __\\/ __ \\ \n" +
+                " |    |   (  <_> )   /|  |   |  \\  ___/   |    |   \\  ___/|  | \\/ /_/ |  |  /|  | \\  ___/ \n" +
+                " |____|_  /\\____/ \\_/ |__|___|  /\\___  >  |____|    \\___  >__|  \\____ |____/ |__|  \\___  >\n" +
+                "        \\/                    \\/     \\/                 \\/           \\/                \\/ \n");
+        long timeStartTot=0;
 
-        ProgressBar.value(0);
-        long timeStart_a = System.currentTimeMillis();
-        PathFinder pathFinder=new PathFinder();
-        ProgressBar.value(3);
-        pathFinder.aStar(0, vertices - 1);
-        //System.out.print(".");
-        //System.out.println("complete.");
-        ArrayList<Integer> ids = pathFinder.printPath(vertices - 1);
-        ProgressBar.value(7);
+        int scelta=InputDati.leggiIntero("-->",0,2);
+        switch (scelta){
+            case 0:
+                //Exit
+            break;
+            case 1:
+                timeStartTot = System.currentTimeMillis();
+                //Fast Calculation
+                aStarInitializer(vertices,cities);
+                aStarInitializer(vertices,cities_temp);
+            break;
+            case 2:
+                timeStartTot = System.currentTimeMillis();
+                //Slow Calculation
+                aStarInitializer(vertices,cities);
+                aStarInitializer(vertices,cities_temp);
+                yenPreInitializer(vertices, cities);
+                yenPreInitializer(vertices, cities_temp);
+            break;
+        }
 
-
-        ProgressBar.value(10);
-
-        double total_sum = pathFinder.sumFuel(ids);
-
-        //System.out.println(total_sum);
-        System.out.println(" "+"n) cost: [path]");
-        System.out.print(" "+1 + ") " +total_sum+": ");
-        pathFinder.viewPath2(ids);
-
-
-        //Numero citta' toccate
-        int number = pathFinder.getNumber_city();
-        System.out.println(" "+number);
-        long timeFinish_a = System.currentTimeMillis();
-        System.out.println(" "+"Operation took " + (timeFinish_a - timeStart_a) / 1000.0 + " seconds.");
-        System.out.println(" "+"____________________________________________________________________________"+"\n");
-
-
-
+        System.out.println(LINE);
+        long timeFinishTot = System.currentTimeMillis();
+        System.out.println(" "+"Total operation took " + (timeFinishTot - timeStartTot) / 1000.0 + " seconds.");
 
 
 
@@ -105,25 +103,20 @@ public class Main {
             }
         }
         */
-        //=============================================================
-        /*
-        System.out.println("Tutti i percorsi");
-        AllPathfinder allpath = new AllPathfinder(vertices);
-        for (int i = 0; i < cities.size(); i++) {
-            for (int j = 0; j < cities.get(i).getNeighbors().size(); j++) {
-                allpath.addEdge(cities.get(i).getId(),cities.get(i).getNeighbors().get(j).city_id);
-            }
-        }
-        allpath.printAllPaths(0, vertices-1);
-        */
+
         //================================================================
+
+        //System.out.println(cities);
+    }
+
+    private static void yenPreInitializer(int vertices, ArrayList<City> cities) {
         //Test Yen
 
         try {
             FileWriter myWriter = new FileWriter("Matrice2.txt");
             for (int i = 0; i < cities.size(); i++) {
                 for (int j = 0; j < cities.get(i).getNeighbors().size(); j++) {
-                    myWriter.write(cities.get(i).getId()+" "+cities.get(i).getNeighbors().get(j).city_id+" "+cities.get(i).getNeighbors().get(j).weight);
+                    myWriter.write(cities.get(i).getId()+" "+ cities.get(i).getNeighbors().get(j).city_id+" "+ cities.get(i).getNeighbors().get(j).weight);
                     myWriter.write("\n");
                 }
 
@@ -141,25 +134,55 @@ public class Main {
 
         graphFilename = "Matrice2.txt";
         sourceNode = "0";
-        targetNode = (vertices-1)+"";
+        targetNode = (vertices -1)+"";
         K = 2;
 
-        System.out.println(" "+"____________________________________________________________________________"+"\n");
+        System.out.println(LINE);
 
-        yenInizializer(graphFilename,sourceNode,targetNode,K);
+        yenInitializer(graphFilename,sourceNode,targetNode,K);
 
-        System.out.println(" "+"____________________________________________________________________________"+"\n");
-
-        long timeFinishTot = System.currentTimeMillis();
-        System.out.println(" "+"Total operation took " + (timeFinishTot - timeStartTot) / 1000.0 + " seconds.");
-        //System.out.println(cities);
+        System.out.println(LINE);
     }
 
-    public static ArrayList<City> getCities() {
-        return cities;
+    private static void aStarInitializer(int vertices, ArrayList<City> cities) {
+        for (int i = cities.size()-1; i >=0 ; i--) {
+            cities.get(i).setH(i);
+        }
+        System.out.println(LINE);
+
+        System.out.print(" "+"Computing the " + 1 + " shortest paths from [" + 0 + "] to [" + (vertices -1) + "] ");
+        System.out.println(" "+"using A* algorithm.\n");
+
+        ProgressBar.value(0);
+        long timeStart_a = System.currentTimeMillis();
+        PathFinder pathFinder=new PathFinder();
+        ProgressBar.value(3);
+        pathFinder.aStar(0, vertices - 1,cities);
+        //System.out.print(".");
+        //System.out.println("complete.");
+        ArrayList<Integer> ids = pathFinder.printPath(vertices - 1);
+        ProgressBar.value(7);
+
+
+        ProgressBar.value(10);
+
+        double total_sum = pathFinder.sumFuel(ids);
+
+        //System.out.println(total_sum);
+        System.out.println(" "+"n) cost: [path]");
+        System.out.print(" "+1 + ") " +total_sum+": ");
+        pathFinder.viewPath2(ids);
+
+
+        //Numero citta' toccate
+        int number = pathFinder.getNumber_city();
+        System.out.println(" "+number);
+        long timeFinish_a = System.currentTimeMillis();
+        System.out.println(" "+"Operation took " + (timeFinish_a - timeStart_a) / 1000.0 + " seconds.");
+        System.out.println(LINE);
     }
 
-    public static void yenInizializer(String graphFilename, String source, String target, int k) {
+    public static void yenInitializer(String graphFilename, String source, String target, int k) {
         /* Read graph from file */
         System.out.print(" "+"Reading data from file... ");
         Graph graph = new Graph(graphFilename);

@@ -9,11 +9,15 @@ import java.util.PriorityQueue;
 public class PathFinder {
 
     private int number_city;
+    private ArrayList<City> cities_arr;
 
-    public int aStar(int start_, int target_){
+    public int aStar(int start_, int target_, ArrayList<City> cities){
 
-        City start=Main.getCities().get(start_);
-        City target=Main.getCities().get(target_);
+        cities_arr=new ArrayList<>();
+        cities_arr=cities;
+
+        City start=cities_arr.get(start_);
+        City target=cities_arr.get(target_);
 
         PriorityQueue<City> closedList = new PriorityQueue<>();
         PriorityQueue<City> openList = new PriorityQueue<>();
@@ -30,7 +34,7 @@ public class PathFinder {
 
             for(Link edge : n.getNeighbors()){
                 int m_int = edge.city_id;
-                City m=Main.getCities().get(m_int);
+                City m=cities_arr.get(m_int);
                 double totalWeight = n.getG() + edge.weight;
 
                 if(!openList.contains(m) && !closedList.contains(m)){
@@ -60,7 +64,7 @@ public class PathFinder {
 
     public ArrayList<Integer> printPath(int target){
 
-        City n=Main.getCities().get(target);
+        City n=cities_arr.get(target);
 
         if(n==null)
             return (new ArrayList<Integer>());
@@ -107,9 +111,9 @@ public class PathFinder {
         double sum=0;
         number_city=0;
         for (int i = 0; i < ids.size()-1; i++) {
-            for (int j = 0; j < Main.getCities().get(ids.get(i)).getNeighbors().size(); j++) {
-                if (Main.getCities().get(ids.get(i)).getNeighbors().get(j).city_id== ids.get(i+1)) {
-                    sum+=(Main.getCities().get(ids.get(i)).getNeighbors().get(j).weight);
+            for (int j = 0; j < cities_arr.get(ids.get(i)).getNeighbors().size(); j++) {
+                if (cities_arr.get(ids.get(i)).getNeighbors().get(j).city_id== ids.get(i+1)) {
+                    sum+=(cities_arr.get(ids.get(i)).getNeighbors().get(j).weight);
                     number_city++;
                 }
             }

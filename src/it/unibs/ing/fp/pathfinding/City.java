@@ -97,17 +97,17 @@ public class City implements Comparable<City> {
         return this.h;
     }
 
-    public void calculateLink(Vehicle vehicle){
+    public void calculateLink(Vehicle vehicle, ArrayList<City> cities){
             //zero fuel on difference in altitude
             if(vehicle.getVehicle_type() == 0){
                 for (int i = 0; i < neighbors.size(); i++) {
-                    neighbors.get(i).weight = Main.getCities().get(neighbors.get(i).city_id).getCoordinate().distanceMethod(this.coordinate);
+                    neighbors.get(i).weight = cities.get(neighbors.get(i).city_id).getCoordinate().distanceMethod(this.coordinate);
                 }
             }
             //add fuel between city on the different altitude
             if(vehicle.getVehicle_type() == 1) {
                 for (int i = 0; i < neighbors.size(); i++) {
-                    neighbors.get(i).weight = Main.getCities().get(neighbors.get(i).city_id).getCoordinate().heightDifference(this.coordinate);
+                    neighbors.get(i).weight = cities.get(neighbors.get(i).city_id).getCoordinate().heightDifference(this.coordinate);
 
                 }
             }
