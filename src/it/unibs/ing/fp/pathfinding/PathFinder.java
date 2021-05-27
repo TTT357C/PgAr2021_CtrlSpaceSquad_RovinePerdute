@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.PriorityQueue;
 
+/**
+ * @author Thomas Causetti
+ */
 public class PathFinder {
 
     private int number_city;

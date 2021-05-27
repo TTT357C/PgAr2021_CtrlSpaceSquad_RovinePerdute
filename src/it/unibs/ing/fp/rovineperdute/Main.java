@@ -3,10 +3,7 @@ import it.unibs.ing.fp.altro.Graph;
 import it.unibs.ing.fp.altro.ksp.Yen;
 import it.unibs.ing.fp.altro.util.Path;
 import it.unibs.ing.fp.mylib.InputDati;
-import it.unibs.ing.fp.pathfinding.City;
-import it.unibs.ing.fp.pathfinding.PathFinder;
-import it.unibs.ing.fp.pathfinding.ProgressBar;
-
+import it.unibs.ing.fp.pathfinding.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,18 +13,50 @@ import java.util.List;
 
 public class Main {
 
-
+    //Constant
+    //========================================================================================================
     public static final String LINE = " " + "____________________________________________________________________________" + "\n";
+    public static final String MENU = "\n" +
+            "__________            .__                __________                 .___      __          \n" +
+            "\\______   \\ _______  _|__| ____   ____   \\______   \\ ___________  __| _/_ ___/  |_  ____  \n" +
+            " |       _//  _ \\  \\/ /  |/    \\_/ __ \\   |     ___// __ \\_  __ \\/ __ |  |  \\   __\\/ __ \\ \n" +
+            " |    |   (  <_> )   /|  |   |  \\  ___/   |    |   \\  ___/|  | \\/ /_/ |  |  /|  | \\  ___/ \n" +
+            " |____|_  /\\____/ \\_/ |__|___|  /\\___  >  |____|    \\___  >__|  \\____ |____/ |__|  \\___  >\n" +
+            "        \\/                    \\/     \\/                 \\/           \\/                \\/ \n";
+    //========================================================================================================
 
+    /**
+     * Main Method
+     * @author Thomas Causetti
+     * @param args
+     */
     public static void main(String[] args) {
-        int vertices=13;
-        ReadXML read= new ReadXML();
+
+        //========================================================================================================
+        //Number of vertices
+        int vertices=200;
+
+        //New instance of ReadXML
+        ReadXML read = new ReadXML();
+        //========================================================================================================
+
+
+        //Arraylist with the cities (Nodes of the graph)
+        //========================================================================================================
         ArrayList<City> cities=new ArrayList<>();
         ArrayList<City> cities_temp=new ArrayList<>();
+        //========================================================================================================
 
+
+        //Read from file
+        //========================================================================================================
         read.readCities(cities,"test_file/PgAr_Map_"+vertices+".xml");
         read.readCities(cities_temp,"test_file/PgAr_Map_"+vertices+".xml");
+        //========================================================================================================
 
+
+        //Weight Calculation
+        //========================================================================================================
         for (City city:cities) {
             city.calculateLink(new Vehicle("Tonathiu",0),cities);
         }
@@ -35,27 +64,31 @@ public class Main {
         for (City city:cities_temp) {
             city.calculateLink(new Vehicle("Metztli",1),cities_temp);
         }
+        //========================================================================================================
 
-        System.out.println("\n" +
-                "__________            .__                __________                 .___      __          \n" +
-                "\\______   \\ _______  _|__| ____   ____   \\______   \\ ___________  __| _/_ ___/  |_  ____  \n" +
-                " |       _//  _ \\  \\/ /  |/    \\_/ __ \\   |     ___// __ \\_  __ \\/ __ |  |  \\   __\\/ __ \\ \n" +
-                " |    |   (  <_> )   /|  |   |  \\  ___/   |    |   \\  ___/|  | \\/ /_/ |  |  /|  | \\  ___/ \n" +
-                " |____|_  /\\____/ \\_/ |__|___|  /\\___  >  |____|    \\___  >__|  \\____ |____/ |__|  \\___  >\n" +
-                "        \\/                    \\/     \\/                 \\/           \\/                \\/ \n");
+
+        //Menu
+        //========================================================================================================
+        System.out.println(MENU);
+        //variabile for time calculation
         long timeStartTot=0;
 
+
+        //========================================================================================================
         int scelta=InputDati.leggiIntero("-->",0,2);
         switch (scelta){
+            //========================================================================================================
             case 0:
                 //Exit
             break;
+            //========================================================================================================
             case 1:
                 timeStartTot = System.currentTimeMillis();
                 //Fast Calculation
                 aStarInitializer(vertices,cities);
                 aStarInitializer(vertices,cities_temp);
             break;
+            //========================================================================================================
             case 2:
                 timeStartTot = System.currentTimeMillis();
                 //Slow Calculation
@@ -64,12 +97,16 @@ public class Main {
                 yenPreInitializer(vertices, cities);
                 yenPreInitializer(vertices, cities_temp);
             break;
+            //========================================================================================================
         }
 
+
+        //========================================================================================================
+        //End of the execution with time
         System.out.println(LINE);
         long timeFinishTot = System.currentTimeMillis();
         System.out.println(" "+"Total operation took " + (timeFinishTot - timeStartTot) / 1000.0 + " seconds.");
-
+        //========================================================================================================
 
 
         //matrix

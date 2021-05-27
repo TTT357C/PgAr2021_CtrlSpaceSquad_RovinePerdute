@@ -15,24 +15,24 @@ import java.util.*;
 public class ReadXML {
 
     //========================================================================================================
-    //Costanti
+    //Constant
     private static final String READ_DOC = " Start Read Doc ";
-    public static final String ERRORE_NELL_INIZ = "Errore nell' inizializzazione del reader:";
+    public static final String ERROR_INIZ = "Error during reader initialization:";
 
     //========================================================================================================
     /**
-     * Metodo che genera un XMLStreamReader
-     * @param nome_file Stringa contenente il nome del file
+     * Method that generate an instance of XMLStreamReader
+     * @param file_name String
      * @return xmlr XMLStreamReader
      */
-    public XMLStreamReader xmlStreamReaderGenerator(String nome_file){
+    public XMLStreamReader xmlStreamReaderGenerator(String file_name){
         XMLInputFactory xmlif;
         XMLStreamReader xmlr = null;
         try {
             xmlif = XMLInputFactory.newInstance();
-            xmlr = xmlif.createXMLStreamReader(nome_file, new FileInputStream(nome_file));
+            xmlr = xmlif.createXMLStreamReader(file_name, new FileInputStream(file_name));
         } catch (Exception e) {
-            System.out.println(ERRORE_NELL_INIZ);
+            System.out.println(ERROR_INIZ);
             System.out.println(e.getMessage());
         }
         return xmlr;
@@ -47,18 +47,18 @@ public class ReadXML {
 
         XMLStreamReader xmlr=xmlStreamReaderGenerator(filename);
         try {
-            while (xmlr.hasNext()) { // continua a leggere finché ha eventi a disposizione
+            while (xmlr.hasNext()) { // It continue to read until the last event (End of the file)
 
-                //--- Inizio Switch --------------------------------------
+                //--- Start Switch --------------------------------------
                 // switch sul tipo di evento
                 switch (xmlr.getEventType()) {
 
-                    // inizio del documento: stampa che inizia il documento
+                    // Start of the document
                     case XMLStreamConstants.START_DOCUMENT:
                         System.out.println(READ_DOC + filename);
                         break;
 
-                    // inizio di un elemento: stampa il nome del tag e i suoi attributi
+                    // Start of the element
                     case XMLStreamConstants.START_ELEMENT:
                         //Attributes
                         //========================================================
@@ -77,7 +77,7 @@ public class ReadXML {
                             ArrayList<Link> read_link =new ArrayList<>();
                             continueToStart(xmlr);
                             while(xmlr.getLocalName().equals("link")) {
-                                //System.out.println(xmlr.getLocalName());
+
                                 read_link.add(new Link(Integer.parseInt(xmlr.getAttributeValue(0))));
                                 int check=continueToStart(xmlr);
                                 if(check==-1){
@@ -114,7 +114,7 @@ public class ReadXML {
 
     //========================================================================================================
     /**
-     * Metodo che continua a ciclare fino al prossimo getEventType() --> XMLStreamConstants.CHARACTERS
+     * Method that find the next getEventType() --> XMLStreamConstants.CHARACTERS
      * @param xmlr XMLStreamReader
      * @throws XMLStreamException throws exception
      */
