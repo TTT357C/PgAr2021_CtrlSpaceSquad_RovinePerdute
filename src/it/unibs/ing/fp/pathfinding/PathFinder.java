@@ -11,9 +11,24 @@ import java.util.PriorityQueue;
  */
 public class PathFinder {
 
-    private int number_city;
+    /**
+     * Number of cities in the A* Path, if the sumFuel Method is not called this variabile value is -1
+     */
+    private int number_city=-1;
+
+    /**
+     * Array with all the cities (Nodes for A*) and all links (Edge for A*)
+     */
     private ArrayList<City> cities_arr;
 
+    /**
+     * Pathfinding method, it found the best path between two nodes of a graph.
+     * It's really fast compared to other methods
+     * @param start_ Start node
+     * @param target_ End node
+     * @param cities Arraylist of cities
+     * @return -1 if there are problems, (in other cases 1)
+     */
     public int aStar(int start_, int target_, ArrayList<City> cities){
 
         cities_arr=new ArrayList<>();
@@ -25,7 +40,7 @@ public class PathFinder {
         PriorityQueue<City> closedList = new PriorityQueue<>();
         PriorityQueue<City> openList = new PriorityQueue<>();
 
-        //Calcolo Euristico
+        //Heuristic Calculation
         start.setF(start.getG() + start.calculateHeuristic(target));
         openList.add(start);
 
@@ -65,7 +80,12 @@ public class PathFinder {
         return 1;
     }
 
-    public ArrayList<Integer> printPath(int target){
+    /**
+     * It generate the array of cities ids
+     * @param target
+     * @return ids ArrayList<Integer>
+     */
+    public ArrayList<Integer> outputArrayGen(int target){
 
         City n=cities_arr.get(target);
 
@@ -84,6 +104,10 @@ public class PathFinder {
         return ids;
     }
 
+    /**
+     * First kind of visualization of the Arraylist
+     * @param ids Arraylist with the ids of all the city of the current path
+     */
     public void viewPath(ArrayList<Integer> ids) {
         int cont=0;
         for(int id : ids){
@@ -96,6 +120,10 @@ public class PathFinder {
         System.out.println();
     }
 
+    /**
+     * Second kind of visualization of the Arraylist
+     * @param ids Arraylist with the ids of all the city of the current path
+     */
     public void viewPath2(ArrayList<Integer> ids) {
         int cont=0;
         System.out.print("[");
@@ -109,6 +137,11 @@ public class PathFinder {
         System.out.println("]");
     }
 
+    /**
+     * Method for the calculation of the total amount of fuel used and the number of city it pass thought
+     * @param ids Arraylist with the ids of all the city of the current path
+     * @return sum (total fuel)
+     */
     public double sumFuel(ArrayList<Integer> ids) {
         //Sum and number of city calculation
         double sum=0;
@@ -125,7 +158,10 @@ public class PathFinder {
     }
 
 
-
+    /**
+     * Getter for the number of city of the path find with aStar
+     * @return
+     */
     public int getNumber_city() {
         return number_city;
     }

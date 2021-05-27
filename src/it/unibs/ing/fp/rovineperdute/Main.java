@@ -7,7 +7,6 @@ import it.unibs.ing.fp.pathfinding.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -23,6 +22,8 @@ public class Main {
             " |    |   (  <_> )   /|  |   |  \\  ___/   |    |   \\  ___/|  | \\/ /_/ |  |  /|  | \\  ___/ \n" +
             " |____|_  /\\____/ \\_/ |__|___|  /\\___  >  |____|    \\___  >__|  \\____ |____/ |__|  \\___  >\n" +
             "        \\/                    \\/     \\/                 \\/           \\/                \\/ \n";
+    public static final String TEAM_NAME_1 = "Tonathiu";
+    public static final String TEAM_NAME_2 = "Metztli";
     //========================================================================================================
 
     /**
@@ -58,11 +59,11 @@ public class Main {
         //Weight Calculation
         //========================================================================================================
         for (City city:cities) {
-            city.calculateLink(new Vehicle("Tonathiu",0),cities);
+            city.calculateLink(new Vehicle(TEAM_NAME_1,0),cities);
         }
 
         for (City city:cities_temp) {
-            city.calculateLink(new Vehicle("Metztli",1),cities_temp);
+            city.calculateLink(new Vehicle(TEAM_NAME_2,1),cities_temp);
         }
         //========================================================================================================
 
@@ -197,7 +198,7 @@ public class Main {
         pathFinder.aStar(0, vertices - 1,cities);
         //System.out.print(".");
         //System.out.println("complete.");
-        ArrayList<Integer> ids = pathFinder.printPath(vertices - 1);
+        ArrayList<Integer> ids = pathFinder.outputArrayGen(vertices - 1);
         ProgressBar.value(7);
 
 
