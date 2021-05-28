@@ -100,13 +100,13 @@ public class City implements Comparable<City> {
             //zero fuel on difference in altitude
             if(vehicle.getVehicle_type() == 0){
                 for (int i = 0; i < neighbors.size(); i++) {
-                    neighbors.get(i).weight = cities.get(neighbors.get(i).city_id).getCoordinate().distanceMethod(this.coordinate);
+                    neighbors.get(i).setWeight(cities.get(neighbors.get(i).getCity_id()).getCoordinate().distanceMethod(this.coordinate));
                 }
             }
             //add fuel between city on the different altitude
             if(vehicle.getVehicle_type() == 1) {
                 for (int i = 0; i < neighbors.size(); i++) {
-                    neighbors.get(i).weight = cities.get(neighbors.get(i).city_id).getCoordinate().heightDifference(this.coordinate);
+                    neighbors.get(i).setWeight(cities.get(neighbors.get(i).getCity_id()).getCoordinate().heightDifference(this.coordinate));
 
                 }
             }
@@ -114,7 +114,7 @@ public class City implements Comparable<City> {
             if(vehicle.getVehicle_type() == -1){
                 Random rand= new Random();
                 for (int i = 0; i < neighbors.size(); i++) {
-                    neighbors.get(i).weight = rand.nextInt(1000 - 1 + 1) + 1;
+                    neighbors.get(i).setWeight(rand.nextInt(1000 - 1 + 1) + 1);
                 }
             }
 

@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Thomas Causetti
+ */
 public class Utilities {
 
 
@@ -27,10 +30,10 @@ public class Utilities {
             " |____|_  /\\____/ \\_/ |__|___|  /\\___  >  |____|    \\___  >__|  \\____ |____/ |__|  \\___  >\n" +
             "        \\/                    \\/     \\/                 \\/           \\/                \\/ \n";
     public static final String MENU2 =  "  _____________________________________________\n"+
-            " |                                             |\n"+
-            " |  1- Fast Execution (A*)                     |\n"+
-            " |  2- Slow Execution (Yen)                    |\n"+
-            " |_____________________________________________|\n";
+                                        " |                                             |\n"+
+                                        " |  1- Fast Execution (A*)                     |\n"+
+                                        " |  2- Slow Execution (Yen)                    |\n"+
+                                        " |_____________________________________________|\n";
     public static final String TEAM_NAME_1 = "Tonathiu";
     public static final String TEAM_NAME_2 = "Metztli";
     //========================================================================================================
@@ -50,7 +53,7 @@ public class Utilities {
             FileWriter myWriter = new FileWriter("Graph.txt");
             for (int i = 0; i < cities.size(); i++) {
                 for (int j = 0; j < cities.get(i).getNeighbors().size(); j++) {
-                    myWriter.write(cities.get(i).getId()+" "+ cities.get(i).getNeighbors().get(j).city_id+" "+ cities.get(i).getNeighbors().get(j).weight);
+                    myWriter.write(cities.get(i).getId()+" "+ cities.get(i).getNeighbors().get(j).getCity_id()+" "+ cities.get(i).getNeighbors().get(j).getWeight());
                     myWriter.write("\n");
                 }
 

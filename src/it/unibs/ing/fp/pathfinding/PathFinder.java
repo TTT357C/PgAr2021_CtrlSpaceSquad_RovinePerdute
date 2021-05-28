@@ -54,9 +54,9 @@ public class PathFinder {
             }
 
             for(Link edge : n.getNeighbors()){
-                int m_int = edge.city_id;
+                int m_int = edge.getCity_id();
                 City m=cities_arr.get(m_int);
-                double totalWeight = n.getG() + edge.weight;
+                double totalWeight = n.getG() + edge.getWeight();
 
                 if(!openList.contains(m) && !closedList.contains(m)){
                     m.setParent(n);
@@ -153,8 +153,8 @@ public class PathFinder {
         number_city=0;
         for (int i = 0; i < ids.size()-1; i++) {
             for (int j = 0; j < cities_arr.get(ids.get(i)).getNeighbors().size(); j++) {
-                if (cities_arr.get(ids.get(i)).getNeighbors().get(j).city_id== ids.get(i+1)) {
-                    sum+=(cities_arr.get(ids.get(i)).getNeighbors().get(j).weight);
+                if (cities_arr.get(ids.get(i)).getNeighbors().get(j).getCity_id()== ids.get(i+1)) {
+                    sum+=(cities_arr.get(ids.get(i)).getNeighbors().get(j).getWeight());
                     number_city++;
                 }
             }
