@@ -71,7 +71,7 @@
         <city id="1983" name="Qu'umarkaj"/>
         <city id="1999" name="Rovine Perdute"/>
     </route>
-    <route cities="74" cost="9639.0" team="Metztli">
+    <route cities="76" cost="9639.0" team="Metztli">
         <city id="0" name="campo base"/>
         <city id="36" name="Quetzacoatl"/>
         <city id="67" name="Mixco Vieio"/>
@@ -93,6 +93,7 @@
         <city id="483" name="Qu'umarkaj"/>
         <city id="509" name="Guaia"/>
         <city id="530" name="Macondo"/>
+        <city id="531" name="Tenochticlan"/>
         <city id="574" name="Machu Picchu"/>
         <city id="603" name="Quirigua"/>
         <city id="636" name="Teotiguacan"/>
@@ -121,7 +122,7 @@
         <city id="1252" name="Tikal"/>
         <city id="1260" name="El Mirador"/>
         <city id="1294" name="Quirigua"/>
-        <city id="1306" name="Rio"/>
+        <city id="1321" name="Rio"/>
         <city id="1322" name="Tenochticlan"/>
         <city id="1341" name="Chiva"/>
         <city id="1375" name="Guaia"/>
@@ -143,6 +144,7 @@
         <city id="1852" name="Verolanuova"/>
         <city id="1882" name="Verolanuova"/>
         <city id="1921" name="Guapalupa"/>
+        <city id="1936" name="Teotiguacan"/>
         <city id="1941" name="Teotiguacan"/>
         <city id="1982" name="Qu'umarkaj"/>
         <city id="1999" name="Rovine Perdute"/>
