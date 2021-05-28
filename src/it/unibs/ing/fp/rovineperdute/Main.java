@@ -41,7 +41,7 @@ public class Main {
             }
         }
 
-        int index_t = InputDati.leggiIntero(" Enter the number for choosing the file: ",1,listOfFiles.length);
+        int index_t = InputDati.leggiIntero(" Enter the index number for choosing the file: ",1,listOfFiles.length);
         String file_name = listOfFiles[index_t-1].getName();
         //========================================================================================================
 
