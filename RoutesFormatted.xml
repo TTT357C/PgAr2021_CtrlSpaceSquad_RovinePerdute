@@ -1,69 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <routes>
-    <route cities="28" cost="26173.020777841222" team="Tonathiu">
+    <route cities="3" cost="11115.513781264603" team="Tonathiu">
         <city id="0" name="campo base"/>
-        <city id="43" name="El Mirador"/>
-        <city id="119" name="Macondo"/>
-        <city id="206" name="Mixco Vieio"/>
-        <city id="276" name="Rio"/>
-        <city id="351" name="Quirigua"/>
-        <city id="383" name="Tikal"/>
-        <city id="468" name="Cusco"/>
-        <city id="545" name="Cusco"/>
-        <city id="626" name="Quetzacoatl"/>
-        <city id="695" name="Caracol"/>
-        <city id="774" name="Rio"/>
-        <city id="852" name="Chiqua"/>
-        <city id="914" name="Chiva"/>
-        <city id="990" name="Chiva"/>
-        <city id="1084" name="Teotiguacan"/>
-        <city id="1160" name="Quirigua"/>
-        <city id="1257" name="Cusco"/>
-        <city id="1327" name="Guaia"/>
-        <city id="1423" name="Quirigua"/>
-        <city id="1506" name="Mixco Vieio"/>
-        <city id="1551" name="Cusco"/>
-        <city id="1615" name="Teotiguacan"/>
-        <city id="1677" name="Caracol"/>
-        <city id="1775" name="Guapalupa"/>
-        <city id="1821" name="Macondo"/>
-        <city id="1904" name="Kopa"/>
-        <city id="1999" name="Macondo"/>
+        <city id="3" name="Mixco Vieio"/>
+        <city id="4" name="Rovine Perdute"/>
     </route>
-    <route cities="34" cost="1936.0" team="Metztli">
+    <route cities="3" cost="1791.0" team="Metztli">
         <city id="0" name="campo base"/>
-        <city id="16" name="Cusco"/>
-        <city id="17" name="Verolanuova"/>
-        <city id="37" name="Cusco"/>
-        <city id="107" name="Chiqua"/>
-        <city id="197" name="Tikal"/>
-        <city id="264" name="Qu'umarkaj"/>
-        <city id="333" name="Quetzacoatl"/>
-        <city id="431" name="Teotiguacan"/>
-        <city id="479" name="Qu'umarkaj"/>
-        <city id="566" name="Mixco Vieio"/>
-        <city id="641" name="Mixco Vieio"/>
-        <city id="738" name="Chiqua"/>
-        <city id="828" name="Rio"/>
-        <city id="905" name="El Mirador"/>
-        <city id="967" name="Machu Picchu"/>
-        <city id="1007" name="Guaia"/>
-        <city id="1075" name="Tikal"/>
-        <city id="1121" name="Macondo"/>
-        <city id="1113" name="Cusco"/>
-        <city id="1155" name="El Mirador"/>
-        <city id="1193" name="Guaia"/>
-        <city id="1290" name="Mixco Vieio"/>
-        <city id="1303" name="Machu Picchu"/>
-        <city id="1398" name="Quetzacoatl"/>
-        <city id="1493" name="Rio"/>
-        <city id="1591" name="Mixco Vieio"/>
-        <city id="1673" name="Rio"/>
-        <city id="1773" name="Kopa"/>
-        <city id="1788" name="Machu Picchu"/>
-        <city id="1855" name="Chiqua"/>
-        <city id="1920" name="Machu Picchu"/>
-        <city id="1948" name="Chiva"/>
-        <city id="1999" name="Macondo"/>
+        <city id="1" name="Tikal"/>
+        <city id="4" name="Rovine Perdute"/>
     </route>
 </routes>
