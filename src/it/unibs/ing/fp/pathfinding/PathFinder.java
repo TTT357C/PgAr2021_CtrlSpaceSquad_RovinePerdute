@@ -44,6 +44,9 @@ public class PathFinder {
         start.setF(start.getG() + start.calculateHeuristic(target));
         openList.add(start);
 
+        //=====================================
+        //A*
+        //=====================================
         while(!openList.isEmpty()){
             City n = openList.peek();
             if(n == target){
@@ -77,6 +80,8 @@ public class PathFinder {
             openList.remove(n);
             closedList.add(n);
         }
+        //=====================================
+
         return 1;
     }
 
