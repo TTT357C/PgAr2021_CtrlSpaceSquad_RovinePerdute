@@ -10,11 +10,9 @@ import java.util.Random;
 public class City implements Comparable<City> {
     // Id for readability of result purposes
     private int id;
-
+    private ArrayList<Link> neighbors;
     // Parent in the path
     private City parent = null;
-
-    private ArrayList<Link> neighbors;
 
     // Evaluation functions
     private double f = 0;
@@ -22,6 +20,28 @@ public class City implements Comparable<City> {
     //public double g = Double.MAX_VALUE;
     // Hardcoded heuristic
     private double h;
+
+    /**
+     * City Constructor method, for the creation of the city
+     * @param id City id
+     * @param name name of the city
+     * @param coordinate Coordinate of the city
+     */
+    public City(double h, int id, String name, Coordinates coordinate) {
+        this.h = h;
+        this.id = id;
+        this.name = name;
+        this.coordinate = coordinate;
+        this.neighbors = new ArrayList<Link>();
+    }
+
+    public City(int id, String name, Coordinates coordinate, ArrayList<Link> link) {
+        this.h = 0;
+        this.id = id;
+        this.name = name;
+        this.coordinate = coordinate;
+        this.neighbors = link;
+    }
 
     private String name;
     private Coordinates coordinate;
@@ -66,27 +86,6 @@ public class City implements Comparable<City> {
         return name;
     }
 
-    /**
-     * City Constructor method, for the creation of the city
-     * @param id City id
-     * @param name name of the city
-     * @param coordinate Coordinate of the city
-     */
-    public City(double h, int id, String name, Coordinates coordinate) {
-        this.h = h;
-        this.id = id;
-        this.name = name;
-        this.coordinate = coordinate;
-        this.neighbors = new ArrayList<Link>();
-    }
-
-    public City(int id, String name, Coordinates coordinate, ArrayList<Link> link) {
-        this.h = 0;
-        this.id = id;
-        this.name = name;
-        this.coordinate = coordinate;
-        this.neighbors = link;
-    }
 
     @Override
     public int compareTo(City n) {
