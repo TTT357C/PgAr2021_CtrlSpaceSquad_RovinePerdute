@@ -120,15 +120,17 @@ public class Utilities {
         int index_max=0;
         for (int i = 0; i < ksp.size(); i++) {
             if(ksp.get(0).getTotalCost()==ksp.get(i).getTotalCost()) {
-                sum = 0;
-                for (int j = 0; j < ksp.get(i).getEdges().size(); j++) {
-                    sum += Integer.parseInt(ksp.get(i).getEdges().get(j).getFromNode().toString());
+                if(ksp.get(0).size()==ksp.get(i).size()) {
+                    sum = 0;
+                    for (int j = 0; j < ksp.get(i).getEdges().size(); j++) {
+                        sum += Integer.parseInt(ksp.get(i).getEdges().get(j).getFromNode().toString());
+                    }
+                    sum += Integer.parseInt(ksp.get(i).getEdges().getLast().getToNode().toString());
+                    if (sum > sum_t) {
+                        index_max = i;
+                    }
+                    sum_t = sum;
                 }
-                sum += Integer.parseInt(ksp.get(i).getEdges().getLast().getToNode().toString());
-                if (sum>sum_t){
-                    index_max=i;
-                }
-                sum_t=sum;
             }
         }
 

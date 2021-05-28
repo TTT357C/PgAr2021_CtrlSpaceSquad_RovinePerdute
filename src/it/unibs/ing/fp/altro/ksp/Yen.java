@@ -144,9 +144,6 @@ public final class Yen implements KSPAlgorithm {
                 // Add the best, non-duplicate candidate identified as the k shortest path
                 ksp.add(kthPath);
 
-                //System.out.print("..");
-
-
             }
         } catch (Exception e) {
             System.out.println(e);
