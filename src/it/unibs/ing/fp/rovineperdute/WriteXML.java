@@ -51,9 +51,11 @@ public class WriteXML {
 
 
             xmlw.writeStartElement("route");
-            xmlw.writeAttribute("name", vehicle_a.getTeam_name());
+            xmlw.writeAttribute("team", vehicle_a.getTeam_name());
             xmlw.writeAttribute("cost", String.valueOf(vehicle_a.getFuel()));
             xmlw.writeAttribute("cities", String.valueOf(vehicle_a.getTouched_cities().size()));
+
+
 
             for(int i=0; i<vehicle_a.getTouched_cities().size(); i++){
 
@@ -70,7 +72,7 @@ public class WriteXML {
 
 
             xmlw.writeStartElement("route");
-            xmlw.writeAttribute("name", vehicle_b.getTeam_name());
+            xmlw.writeAttribute("team", vehicle_b.getTeam_name());
             xmlw.writeAttribute("cost", String.valueOf(vehicle_b.getFuel()));
             xmlw.writeAttribute("cities", String.valueOf(vehicle_b.getTouched_cities().size()));
 
